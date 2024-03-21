@@ -8,14 +8,27 @@ export const buildLoaders = (options: BuildOptions): ModuleOptions["rules"] => {
 
   const isDev = mode === "development";
 
-  const cssLoader = {
-    test: /\.s[ac]ss$/i,
-    use: [
-      isDev ? "style-loader" : MiniCssExtractPlugin.loader,
-      "css-loader",
+  const cssLoaderWithModules = {
+    loader: "css-loader",
+    options: {
+        modules: {
+            localIdentName: isDev ? '[path][name]__[local]' : '[hash:base64:8]'
+        },
+    },
+}
+
+const scssLoader = {
+  test: /\.s[ac]ss$/i,
+  use: [
+      // Creates `style` nodes from JS strings
+      isDev ? 'style-loader' : MiniCssExtractPlugin.loader,
+      // Translates CSS into CommonJS
+      cssLoaderWithModules,
+      // Compiles Sass to CSS
       "sass-loader",
-    ],
-  };
+  ],
+}
+
 
   const tsLoader = {
     test: /\.tsx?$/,
@@ -25,7 +38,7 @@ export const buildLoaders = (options: BuildOptions): ModuleOptions["rules"] => {
 
 
     return [
-        cssLoader,
+      scssLoader,
         tsLoader,
       ];
 };
