@@ -1,10 +1,24 @@
-// лучше всего использывать стандартный модуль пас из нодджс для того что бы более корректно обрабатывать все пути на разных ОС
-const path = require("path")
-const HtmlWebpackPlugin = require("html-webpack-plugin")
-const webpack = require("webpack")
+// лучше всего использывать стандартный модуль пас из нодджс для того что бы 
+// более корректно обрабатывать все пути на разных ОС (но после установки webpack-dev-server можем переписать на обычные импорты)
+// import 'webpack-dev-server';
+import path from 'path';
+import webpack from 'webpack';
+import HtmlWebpackPlugin from "html-webpack-plugin";
+import type { Configuration as DevServerConfiguration } from "webpack-dev-server";
 
-module.exports = (env) => {
-    return  {
+
+type Mode = "production" | "development"
+
+type EnvVariables = {
+  mode: Mode,
+  port: number,
+}
+
+export default (env: EnvVariables & DevServerConfiguration) => {
+
+  const isDev = env.mode === "development";
+
+  const config: webpack.Configuration = {
         // мод определяет в каком формате у нас идёт зборка
         // значение нужно передавать с env
         mode: env.mode ?? "development",
@@ -24,8 +38,8 @@ module.exports = (env) => {
           plugins: [
             new HtmlWebpackPlugin({template: path.resolve(__dirname, "public", "index.html")}),
             // не рекомендуется использовать в продакшн так это может сильно замедлять зборку
-            new webpack.ProgressPlugin()
-        ],
+            isDev && new webpack.ProgressPlugin()
+        ].filter(Boolean),
         module: {
           // порядок важен (смотреть ноутс)
           rules: [
@@ -40,5 +54,11 @@ module.exports = (env) => {
           // порядок важен
           extensions: ['.tsx', '.ts', '.js'],
         },
+        devServer: {
+          port: env.port ?? 3333,
+          open: true,
+        },
       };
+
+      return config;
 };
