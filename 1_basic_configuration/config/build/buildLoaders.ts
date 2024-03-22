@@ -1,34 +1,61 @@
-import MiniCssExtractPlugin from "mini-css-extract-plugin";
-import { ModuleOptions } from "webpack";
-import { BuildOptions } from "../types";
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import { ModuleOptions } from 'webpack';
+import { BuildOptions } from '../types';
 
+export const buildLoaders = (options: BuildOptions): ModuleOptions['rules'] => {
+  const { mode } = options;
 
-export const buildLoaders = (options: BuildOptions): ModuleOptions["rules"] => {
-    const {mode} = options
-
-  const isDev = mode === "development";
+  const isDev = mode === 'development';
 
   const cssLoaderWithModules = {
-    loader: "css-loader",
+    loader: 'css-loader',
     options: {
-        modules: {
-            localIdentName: isDev ? '[path][name]__[local]' : '[hash:base64:8]'
-        },
+      modules: {
+        localIdentName: isDev ? '[path][name]__[local]' : '[hash:base64:8]',
+      },
     },
-}
+  };
 
-const scssLoader = {
-  test: /\.s[ac]ss$/i,
-  use: [
+  const assetLoader = {
+    test: /\.(png|jpg|jpeg|gif)$/i,
+    type: 'asset/resource',
+  };
+
+  const svgrLoader = {
+    test: /\.svg$/i,
+    use: [
+      {
+        loader: '@svgr/webpack',
+        options: {
+          // помогает работать с свг-шками, как с иконками
+          icon: true,
+          svgoConfig: {
+            plugins: [
+              // что бі можно біло задавать цвет в инлайн стилях через колор
+              {
+                name: 'convertColors',
+                params: {
+                  currentColor: true,
+                },
+              },
+            ],
+          },
+        },
+      },
+    ],
+  };
+
+  const scssLoader = {
+    test: /\.s[ac]ss$/i,
+    use: [
       // Creates `style` nodes from JS strings
       isDev ? 'style-loader' : MiniCssExtractPlugin.loader,
       // Translates CSS into CommonJS
       cssLoaderWithModules,
       // Compiles Sass to CSS
-      "sass-loader",
-  ],
-}
-
+      'sass-loader',
+    ],
+  };
 
   const tsLoader = {
     test: /\.tsx?$/,
@@ -36,9 +63,5 @@ const scssLoader = {
     exclude: /node_modules/,
   };
 
-
-    return [
-      scssLoader,
-        tsLoader,
-      ];
+  return [assetLoader, scssLoader, tsLoader, svgrLoader];
 };
