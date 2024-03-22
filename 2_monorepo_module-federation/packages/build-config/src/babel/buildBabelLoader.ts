@@ -1,4 +1,4 @@
-import { BuildOptions } from 'config/types';
+import { BuildOptions } from '../types';
 import { removeDataTestIdBabelPlugin } from './removeDataTestIdBabelPlugin';
 
 export function buildBabelLoader(options: BuildOptions) {
