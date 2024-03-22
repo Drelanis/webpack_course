@@ -26,6 +26,7 @@ export const buildPlugins = (
     plugins.push(new webpack.ProgressPlugin());
     /** Выносит проверку типов в отдельный процесс: не нагружая сборку */
     plugins.push(new ForkTsCheckerWebpackPlugin());
+    plugins.push(new ReactRefreshWebpackPlugin());
   }
 
   if (isProd) {

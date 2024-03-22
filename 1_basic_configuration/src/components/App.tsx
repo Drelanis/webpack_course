@@ -12,15 +12,15 @@ export const App = () => {
 
   const increment = () => setCount((prev) => prev + 1);
 
-  if (__PLATFORM__ === 'desktop') {
-    return <div>ISDESKTOPPLATFORM</div>;
-  }
+  // if (__PLATFORM__ === 'desktop') {
+  //   return <div>ISDESKTOPPLATFORM</div>;
+  // }
 
-  if (__PLATFORM__ === 'mobile') {
-    return <div>ISMOBILEPLATFORM</div>;
-  }
+  // if (__PLATFORM__ === 'mobile') {
+  //   return <div>ISMOBILEPLATFORM</div>;
+  // }
 
-  // TODO('123');
+  // // TODO('123');
 
   return (
     <div>
@@ -30,8 +30,6 @@ export const App = () => {
         <img width={100} height={100} src={avatarJpg} alt="" />
       </div>
       <div>
-        asfasfasfasf asfasfasfasf1111 asfasfasfasf1111
-        asfasfasfasf1111asfasfasfasfasfasf
         <Calendar color="red" width={50} height={50} />
       </div>
       <Link to={'/about'}>About</Link>
