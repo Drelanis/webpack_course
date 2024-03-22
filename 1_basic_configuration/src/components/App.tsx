@@ -5,6 +5,8 @@ import avatarPng from '@/assets/avatar.png';
 import avatarJpg from '@/assets/avatar.jpg';
 import Calendar from '@/assets/app-image.svg';
 
+const TODO = (a: number) => console.log(a);
+
 export const App = () => {
   const [count, setCount] = useState<number>(0);
 
@@ -17,6 +19,8 @@ export const App = () => {
   if (__PLATFORM__ === 'mobile') {
     return <div>ISMOBILEPLATFORM</div>;
   }
+
+  // TODO('123');
 
   return (
     <div>

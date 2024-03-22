@@ -3,6 +3,8 @@ import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import webpack, { Configuration, DefinePlugin } from 'webpack';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import { BuildOptions } from '../types';
+import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
+import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 
 export const buildPlugins = (
   options: BuildOptions,
@@ -15,13 +17,15 @@ export const buildPlugins = (
   const plugins: Configuration['plugins'] = [
     new HtmlWebpackPlugin({ template: paths.html }),
     new DefinePlugin({
-      // Значение, которіе задаются при сборки желательно задавать таким образом
+      // Значение, которіе задаются при сборки желательно задавать таким образом имя полей
       __PLATFORM__: JSON.stringify(platform),
     }),
   ];
 
   if (isDev) {
     plugins.push(new webpack.ProgressPlugin());
+    /** Выносит проверку типов в отдельный процесс: не нагружая сборку */
+    plugins.push(new ForkTsCheckerWebpackPlugin());
   }
 
   if (isProd) {
