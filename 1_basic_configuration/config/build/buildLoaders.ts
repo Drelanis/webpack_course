@@ -85,7 +85,5 @@ export const buildLoaders = (options: BuildOptions): ModuleOptions['rules'] => {
     // tsLoader,
     babelLoader,
     svgrLoader,
-    // 1,
-    // 2,
   ];
 };
