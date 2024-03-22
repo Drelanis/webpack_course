@@ -5,6 +5,8 @@ import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import { BuildOptions } from '../types';
 import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
+import path from 'path';
+import CopyPlugin from 'copy-webpack-plugin';
 
 export const buildPlugins = (
   options: BuildOptions,
@@ -15,7 +17,10 @@ export const buildPlugins = (
   const isProd = mode === 'production';
 
   const plugins: Configuration['plugins'] = [
-    new HtmlWebpackPlugin({ template: paths.html }),
+    new HtmlWebpackPlugin({
+      template: paths.html,
+      favicon: path.resolve(paths.public, 'favicon.ico'),
+    }),
     new DefinePlugin({
       // Значение, которіе задаются при сборки желательно задавать таким образом имя полей
       __PLATFORM__: JSON.stringify(platform),
@@ -34,6 +39,16 @@ export const buildPlugins = (
       new MiniCssExtractPlugin({
         filename: 'css/[name].[contenthash:8].css',
         chunkFilename: 'css/[name].[contenthash:8].css',
+      }),
+    );
+    plugins.push(
+      new CopyPlugin({
+        patterns: [
+          {
+            from: path.resolve(paths.public, 'locales'),
+            to: path.resolve(paths.output, 'locales'),
+          },
+        ],
       }),
     );
   }
