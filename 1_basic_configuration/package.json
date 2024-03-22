@@ -6,6 +6,8 @@
   "scripts": {
     "build:dev": "webpack --env mode=development",
     "build:prod": "webpack --env mode=production",
+    "build:mobile": "webpack --env mode=production platform=mobile",
+    "build:desktop": "webpack --env mode=production platform=desktop",
     "start": "webpack serve -- --env port=5555"
   },
   "author": "",
