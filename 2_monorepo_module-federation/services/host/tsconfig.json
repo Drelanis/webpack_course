@@ -1,23 +1,10 @@
 {
+  "extends": "@packages/configs/tsconfig.json",
   "compilerOptions": {
-    "outDir": "./build/",
-    "noImplicitAny": true,
-    "module": "ESNext",
-    "target": "es5",
-    "jsx": "react-jsx",
-    "allowJs": true,
-    "moduleResolution": "node",
-    "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true,
+    "outDir": "./dist/",
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
-    },
-    "resolveJsonModule": true
-  },
-  "ts-node": {
-    "compilerOptions": {
-      "module": "CommonJS"
     }
   }
 }
