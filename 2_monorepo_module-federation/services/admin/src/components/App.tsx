@@ -1,31 +1,15 @@
-import { useState } from 'react';
-import classes from './App.module.scss';
-import { Link, Outlet } from 'react-router-dom';
-import avatarPng from '@/assets/avatar.png';
-import avatarJpg from '@/assets/avatar.jpg';
-import Calendar from '@/assets/app-image.svg';
+import { deepMerge } from '@packages/shared/src/utils/deepMerge';
+import { Outlet } from 'react-router-dom';
 
-const TODO = (a: number) => console.log(a);
+import { UserCard } from '@packages/shared/src/components/UserCard';
 
 export const App = () => {
-  const [count, setCount] = useState<number>(0);
-
-  const increment = () => setCount((prev) => prev + 1);
-
-  // if (__PLATFORM__ === 'desktop') {
-  //   return <div>ISDESKTOPPLATFORM</div>;
-  // }
-
-  // if (__PLATFORM__ === 'mobile') {
-  //   return <div>ISMOBILEPLATFORM</div>;
-  // }
-
+  deepMerge();
   return (
-    <div data-testid="App.dataTestId">
-      <Link to={'/about'}>About</Link>
-      <br />
-      <Link to={'/shop'}>Shop</Link>
+    <div>
+      <h1>ADMIN MODULE</h1>
       <Outlet />
+      <UserCard username={'FROM ADMIN'} />
     </div>
   );
 };

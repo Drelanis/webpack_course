@@ -20,6 +20,7 @@ export const buildPlugins = (
     new HtmlWebpackPlugin({
       template: paths.html,
       favicon: path.resolve(paths.public, 'favicon.ico'),
+      publicPath: '/',
     }),
     new DefinePlugin({
       // Значение, которіе задаются при сборки желательно задавать таким образом имя полей
