@@ -1,3 +1,3 @@
-export const adminRoutes = {
+export const AdminRoutes = {
   about: '/admin/about',
 };
